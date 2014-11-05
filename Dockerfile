@@ -5,6 +5,8 @@ RUN zypper --gpg-auto-import-keys ref
 RUN zypper --non-interactive in wget tar
 RUN zypper --non-interactive in gcc gcc-c++ gettext make
 RUN zypper --non-interactive in ca-certificates unzip autoconf libtool which apache2 apache2-devel
+RUN zypper --non-interactive in sqlite3
+RUN zypper --non-interactive in ed
 
 RUN useradd -m docker
 
@@ -32,8 +34,6 @@ WORKDIR /home/docker
 RUN wget https://github.com/mono/xsp/archive/3.0.11.zip
 RUN unzip 3.0.11.zip
 WORKDIR xsp-3.0.11
-USER root
-RUN zypper --non-interactive in sqlite3
 USER docker
 RUN ./autogen.sh
 RUN make
@@ -53,7 +53,6 @@ RUN xbuild
 
 # DEPLOY
 USER root
-RUN zypper --non-interactive in ed
 RUN mv WcfService1 /srv/www/htdocs/
 RUN ed -s /etc/apache2/httpd.conf <<< $'185d\nw'
 RUN echo Include /etc/apache2/mod_mono.conf >> /etc/apache2/httpd.conf
