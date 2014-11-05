@@ -57,6 +57,7 @@ RUN zypper --non-interactive in ed
 RUN mv WcfService1 /srv/www/htdocs/
 RUN ed -s /etc/apache2/httpd.conf <<< $'185d\nw'
 RUN echo Include /etc/apache2/mod_mono.conf >> /etc/apache2/httpd.conf
+RUN echo MonoServerPath /usr/local/bin/mod-mono-server4 >> /etc/apache2/httpd.conf
 RUN echo AddType application/x-asp-net .svc >> /etc/apache2/httpd.conf
 
 
